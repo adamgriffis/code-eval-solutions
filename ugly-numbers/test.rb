@@ -4,10 +4,8 @@ end
 
 def find_uggos(strPrefix, strRemaining)
 	if ( strRemaining.length == 0) 
-	#	puts "Evaluation: " + strPrefix
 		num = eval(strPrefix.gsub(/0+(?=\d)/,"")) # strip all leading zeros on numbers, this causes weird issues, think it's evaluating as hex or something?
-	#	puts "Result: " + num.to_s
-		return is_uggo(num) ? [strPrefix] : []
+		return is_uggo(num) ? 1 : 0
 	else
 		remaining = strRemaining[1..strRemaining.length]
 		curr_char = strRemaining[0]
@@ -23,7 +21,7 @@ File.open(ARGV[0]).each_line do |line|
 	line.gsub!(/^0+/, "0") #multiple leading zeros are irrelevant, strip all but the first
 	new_length = line.length
 	
-	num_uggos = find_uggos(line[0], line[1..line.length]).uniq.count
+	num_uggos = find_uggos(line[0], line[1..line.length])
 	if new_length < orig_length
 		num_uggos = 3**(orig_length-new_length)*num_uggos
 	end
